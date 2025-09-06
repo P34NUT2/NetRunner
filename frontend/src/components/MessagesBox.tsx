@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { FaRobot, FaUser } from "react-icons/fa";
 
 interface Props {
@@ -7,8 +7,14 @@ interface Props {
 }
 
 const MessageBox: React.FC<Props> = ({ messages, isTyping }) => {
-  // Forzar uso del parámetro para evitar warnings del linter
-  /*console.log('MessageBox render - isTyping:', isTyping);*/
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Auto-scroll al final cuando cambian los mensajes o el typing
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, isTyping]);
   
   return (
     <div
@@ -70,6 +76,9 @@ const MessageBox: React.FC<Props> = ({ messages, isTyping }) => {
           </div>
         </div>
       )}
+      
+      {/* Elemento invisible para auto-scroll */}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
