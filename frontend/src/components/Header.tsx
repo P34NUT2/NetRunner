@@ -22,7 +22,7 @@ const Header: React.FC = () => {
             <Link to="/login" className="px-3 py-1 text-sm bg-transparent border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-black transition">
               Log In
             </Link>
-            <Link to="/login" className="px-3 py-1 text-sm bg-red-500 text-black rounded hover:bg-red-600 transition">
+            <Link to="/register" className="px-3 py-1 text-sm bg-red-500 text-black rounded hover:bg-red-600 transition">
               Sign Up
             </Link>
           </div>

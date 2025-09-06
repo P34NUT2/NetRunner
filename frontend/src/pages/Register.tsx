@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaRobot, FaLock, FaEnvelope } from 'react-icons/fa';
+import { FaRobot, FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +19,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', formData);
+    console.log('Register attempt:', formData);
   };
 
   return (
@@ -36,11 +38,24 @@ const Login: React.FC = () => {
         {/* Form Card */}
         <div className="bg-gray-900 rounded-lg border border-gray-800 p-8">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-white">Iniciar Sesión</h2>
-            <p className="text-gray-400 mt-2">Bienvenido de vuelta</p>
+            <h2 className="text-2xl font-bold text-white">Crear Cuenta</h2>
+            <p className="text-gray-400 mt-2">Únete a NexusAI</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="relative">
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                name="name"
+                placeholder="Nombre completo"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-10 py-3 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                required
+              />
+            </div>
+
             <div className="relative">
               <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
@@ -67,19 +82,32 @@ const Login: React.FC = () => {
               />
             </div>
 
+            <div className="relative">
+              <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirmar contraseña"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-10 py-3 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                required
+              />
+            </div>
+
             <button
               type="submit"
               className="w-full bg-red-500 hover:bg-red-600 text-black font-semibold py-3 rounded-lg transition"
             >
-              Iniciar Sesión
+              Crear Cuenta
             </button>
           </form>
 
           <div className="text-center mt-6">
             <p className="text-gray-400">
-              ¿No tienes cuenta?
-              <Link to="/register" className="text-red-500 hover:text-red-400 ml-2 font-medium">
-                Regístrate
+              ¿Ya tienes cuenta?
+              <Link to="/login" className="text-red-500 hover:text-red-400 ml-2 font-medium">
+                Inicia sesión
               </Link>
             </p>
           </div>
@@ -95,4 +123,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
