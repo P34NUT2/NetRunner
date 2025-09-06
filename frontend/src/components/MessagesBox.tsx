@@ -19,7 +19,7 @@ const MessageBox: React.FC<Props> = ({ messages, isTyping }) => {
   return (
     <div
       id="chat-messages"
-      className="h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar space-y-7 pb-32"
+      className="flex-1 overflow-y-auto custom-scrollbar space-y-7 pb-32"
     >
       {/* Mensaje inicial del bot */}
       <div className="message-fade-in flex">

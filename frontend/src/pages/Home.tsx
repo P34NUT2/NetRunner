@@ -48,7 +48,7 @@ const Home: React.FC = () => {
   return (
     <div className="bg-black text-gray-100 min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-6 max-w-4xl">
+        <main className="flex-1 container mx-auto px-4 py-6 max-w-4xl pt-24">
             <MessageBox messages={messages} isTyping={isTyping} />
         </main>
         {/* Input fijo en la parte inferior */}
