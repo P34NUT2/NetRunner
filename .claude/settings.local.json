@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Read(//home/antonio/proyectos/ReactPrueba/frontend/**)",
+      "Read(//home/antonio/proyectos/ReactPrueba/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

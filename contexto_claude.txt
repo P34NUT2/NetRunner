@@ -1,0 +1,57 @@
+CONTEXTO DEL PROYECTO - FRONTEND REACT + TYPESCRIPT
+==================================================
+
+ESTADO ACTUAL:
+✅ Proyecto React con TypeScript creado con Vite
+✅ Tailwind CSS instalado y configurado
+✅ React Icons instalado y funcionando
+✅ Estructura de carpetas básica creada
+
+ESTRUCTURA DEL PROYECTO:
+frontend/
+├── src/
+│   ├── components/
+│   │   └── Header.tsx          ✅ COMPLETADO
+│   ├── pages/
+│   │   └── Home.tsx           ✅ COMPLETADO
+│   ├── App.tsx                ✅ CONFIGURADO
+│   └── index.css              ✅ CON TAILWIND
+├── tailwind.config.js         ✅ CONFIGURADO
+└── package.json               ✅ CON DEPENDENCIAS
+
+COMPONENTES CREADOS:
+1. Header.tsx:
+   - Tiene logo NexusAI con robot icon
+   - Botones de configuración y dark mode
+   - Botones Log In y Sign Up
+   - Usa React Icons (FaRobot, FaCog, FaMoon)
+   - Styling con Tailwind CSS
+
+2. Home.tsx:
+   - Importa y usa el componente Header
+   - Tiene estructura básica de página
+
+CONFIGURACIÓN TÉCNICA:
+- TypeScript configurado
+- Tailwind CSS v4 con @import "tailwindcss"
+- React Icons instalados
+- App.tsx renderiza Home.tsx
+- Home.tsx renderiza Header.tsx
+
+PRÓXIMOS PASOS SUGERIDOS:
+- Crear más componentes (Footer, Sidebar, etc.)
+- Añadir páginas adicionales
+- Implementar routing con React Router
+- Añadir funcionalidad a los botones del header
+- Crear componentes para el contenido principal
+
+COMANDOS ÚTILES:
+- npm run dev (iniciar servidor desarrollo)
+- npm run build (construir para producción)
+- npm run preview (previsualizar build)
+
+NOTAS IMPORTANTES:
+- React usa className en lugar de class
+- Funciones flecha con const son preferidas
+- JSX necesita un elemento raíz o Fragment <>...</>
+- React Icons se importan y usan como componentes

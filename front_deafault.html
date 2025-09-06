@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAI - Chat Minimalista</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .typing-indicator::after {
+            content: '...';
+            animation: typing 1.5s infinite;
+        }
+        
+        @keyframes typing {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+        
+        .message-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Scrollbar personalizada */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ef4444;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black border-b border-red-500/20 py-4 px-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                    <i class="fas fa-robot text-black"></i>
+                </div>
+                <h1 class="text-xl font-bold text-red-500">Nexus<span class="text-white">AI</span></h1>
+            </div>
+            <div class="flex space-x-4 items-center">
+                <button class="text-gray-400 hover:text-red-500 transition">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="text-gray-400 hover:text-red-500 transition">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="flex space-x-2 ml-2">
+                    <button class="px-3 py-1 text-sm bg-transparent border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-black transition">
+                        Log In
+                    </button>
+                    <button class="px-3 py-1 text-sm bg-red-500 text-black rounded hover:bg-red-600 transition">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chat Container -->
+    <main class="flex-1 container mx-auto px-4 py-6 flex flex-col max-w-4xl">
+        <!-- Chat Messages -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto custom-scrollbar space-y-4 mb-6">
+            <!-- Mensaje de bienvenida -->
+            <div class="message-fade-in flex">
+                <div class="w-8 h-8 bg-red-500 rounded-full flex-shrink-0 flex items-center justify-center mr-3">
+                    <i class="fas fa-robot text-black"></i>
+                </div>
+                <div class="bg-gray-900 rounded-lg p-4 max-w-[85%]">
+                    <p class="text-sm text-gray-400 mb-1">NexusAI</p>
+                    <p class="text-white">Hola, soy NexusAI. Un modelo de lenguaje avanzado. ¿En qué puedo ayudarte hoy?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="bg-gray-900 rounded-lg border border-gray-800 p-4">
+            <form id="chat-form" class="flex space-x-3">
+                <div class="flex-1 relative">
+                    <textarea 
+                        id="user-input" 
+                        rows="1" 
+                        placeholder="Escribe tu mensaje..." 
+                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pr-12 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+                        style="min-height: 50px; max-height: 150px;"
+                    ></textarea>
+                    <button type="button" class="absolute right-3 bottom-3 text-gray-400 hover:text-red-500">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                </div>
+                <button 
+                    type="submit" 
+                    class="bg-red-500 hover:bg-red-600 text-black rounded-lg w-12 h-12 flex items-center justify-center transition"
+                >
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            <p class="text-xs text-gray-500 mt-2 px-1">
+                NexusAI puede cometer errores. Verifica información importante.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatForm = document.getElementById('chat-form');
+            const userInput = document.getElementById('user-input');
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Autoajustar altura del textarea
+            userInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const message = userInput.value.trim();
+                
+                if (message) {
+                    // Agregar mensaje del usuario
+                    addMessage(message, 'user');
+                    userInput.value = '';
+                    userInput.style.height = 'auto';
+                    
+                    // Mostrar indicador de que la IA está escribiendo
+                    showTypingIndicator();
+                    
+                    // Simular respuesta de la IA después de un retraso
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        const response = generateAIResponse(message);
+                        addMessage(response, 'ai');
+                        
+                        // Hacer scroll al final
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }, 1000 + Math.random() * 1500);
+                }
+            });
+            
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message-fade-in flex ${sender === 'user' ? 'justify-end' : ''}`;
+                
+                if (sender === 'user') {
+                    messageDiv.innerHTML = `
+                        <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-4 max-w-[85%]">
+                            <p class="text-sm text-red-400 mb-1">Tú</p>
+                            <p class="text-white">${text}</p>
+                        </div>
+                        <div class="w-8 h-8 bg-red-500/20 rounded-full flex-shrink-0 flex items-center justify-center ml-3 border border-red-500/30">
+                            <i class="fas fa-user text-red-500"></i>
+                        </div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="w-8 h-8 bg-red-500 rounded-full flex-shrink-0 flex items-center justify-center mr-3">
+                            <i class="fas fa-robot text-black"></i>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-4 max-w-[85%]">
+                            <p class="text-sm text-gray-400 mb-1">NexusAI</p>
+                            <p class="text-white">${text}</p>
+                        </div>
+                    `;
+                }
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'flex';
+                typingDiv.id = 'typing-indicator';
+                typingDiv.innerHTML = `
+                    <div class="w-8 h-8 bg-red-500 rounded-full flex-shrink-0 flex items-center justify-center mr-3">
+                        <i class="fas fa-robot text-black"></i>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 max-w-[85%]">
+                        <p class="text-sm text-gray-400 mb-1">NexusAI</p>
+                        <p class="text-white typing-indicator"></p>
+                    </div>
+                `;
+                
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            function generateAIResponse(userMessage) {
+                const responses = [
+                    `Interesante pregunta sobre "${userMessage}". Como modelo de lenguaje, puedo decirte que...`,
+                    `He analizado tu consulta sobre "${userMessage}" y esto es lo que puedo compartir...`,
+                    `${userMessage} es un tema fascinante. Basado en mi conocimiento, puedo decir que...`,
+                    `Entiendo que quieres saber sobre "${userMessage}". Permíteme explicarte...`,
+                    `¡Buena pregunta! Sobre "${userMessage}", los datos que tengo indican que...`
+                ];
+                
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        });
+    </script>
+</body>
+</html>
