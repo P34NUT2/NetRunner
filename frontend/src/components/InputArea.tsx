@@ -3,9 +3,10 @@ import { FaPaperclip, FaPaperPlane } from "react-icons/fa";
 
 interface Props {
   onSendMessage: (text: string) => void;
+  isTyping: boolean;
 }
 
-const InputArea: React.FC<Props> = ({ onSendMessage }) => {
+const InputArea: React.FC<Props> = ({ onSendMessage, isTyping }) => {
   const [message, setMessage] = useState("");
 
     /*Con esto se interactua con el evento y pdemos atrabes de los atributos del text area y el evento hacer  resize al textarea */
@@ -19,7 +20,7 @@ const InputArea: React.FC<Props> = ({ onSendMessage }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim()) {
+    if (message.trim() && !isTyping) {
       onSendMessage(message.trim());
       setMessage("");
       
@@ -38,10 +39,15 @@ const InputArea: React.FC<Props> = ({ onSendMessage }) => {
           <textarea
             id="user-input"
             rows={1}
-            placeholder="Escribe tu mensaje..."
+            placeholder={isTyping ? "NexusAI está escribiendo..." : "Escribe tu mensaje..."}
             value={message}
             onChange={handleInputChange}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 pr-12 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none textarea-scrollbar"
+            disabled={isTyping}
+            className={`w-full border rounded-lg px-4 py-3 pr-12 text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none textarea-scrollbar ${
+              isTyping 
+                ? "bg-gray-700 border-gray-600 cursor-not-allowed opacity-70" 
+                : "bg-gray-800 border-gray-700"
+            }`}
             style={{ minHeight: "50px", maxHeight: "230px" }}
           />
           <button
@@ -53,7 +59,12 @@ const InputArea: React.FC<Props> = ({ onSendMessage }) => {
         </div>
         <button
           type="submit"
-          className="bg-red-500 hover:bg-red-600 text-black rounded-lg w-12 h-12 flex items-center justify-center transition"
+          disabled={isTyping || !message.trim()}
+          className={`rounded-lg w-12 h-12 flex items-center justify-center transition ${
+            isTyping
+              ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+              : "bg-red-500 hover:bg-red-600 text-black"
+          }`}
         >
           <FaPaperPlane />
         </button>
