@@ -48,10 +48,15 @@ const Home: React.FC = () => {
   return (
     <div className="bg-black text-gray-100 min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container mx-auto px-4 py-6 flex flex-col max-w-4xl">
+        <main className="flex-1 container mx-auto px-4 py-6 max-w-4xl">
             <MessageBox messages={messages} isTyping={isTyping} />
-            <InputArea onSendMessage={handleSendMessage} />
         </main>
+        {/* Input fijo en la parte inferior */}
+        <div className="fixed bottom-0 left-0 right-0 ">
+          <div className="container mx-auto px-4 py-4 max-w-4xl">
+            <InputArea onSendMessage={handleSendMessage} />
+          </div>
+        </div>
     </div>
   );
 };
