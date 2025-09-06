@@ -52,7 +52,7 @@ const Home: React.FC = () => {
             <MessageBox messages={messages} isTyping={isTyping} />
         </main>
         {/* Input fijo en la parte inferior */}
-        <div className="fixed bottom-0 left-0 right-0 ">
+        <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-transparent pt-8">   
           <div className="container mx-auto px-4 py-4 max-w-4xl">
             <InputArea onSendMessage={handleSendMessage} />
           </div>
