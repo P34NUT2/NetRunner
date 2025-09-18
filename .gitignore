@@ -8,5 +8,5 @@ Web_Basic.txt
 *.txt
 *.html
 
-# Ignore gitignore itself
-.gitignore
+# Ignore root gitignore only
+/.gitignore
