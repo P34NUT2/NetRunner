@@ -1,0 +1,12 @@
+# Claude files
+.claude/
+CLAUDE_CONTEXT.md
+Web_Basic.txt
+*.jpeg
+
+# Text and HTML files outside frontend
+*.txt
+*.html
+
+# Ignore gitignore itself
+.gitignore
