@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/*
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: black; /* opcional para cubrir todo */
+/*}*/
+
+.typing-indicator::after {
+  content: '...';
+  animation: typing 1.5s infinite;
+}
+
+@keyframes typing {
+  0% { 
+    content: '.'; 
+  }
+  33% { 
+    content: '..'; 
+  }
+  66% { 
+    content: '...'; 
+  }
+}
+
+.message-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Scrollbar personalizada */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #111;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ef4444;
+  border-radius: 3px;
+}
+
+/* Scrollbar minimalista para textarea y color rojo */
+.textarea-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  transition: width 0.2s ease;
+  cursor: default;
+}
+
+.textarea-scrollbar:hover::-webkit-scrollbar {
+  width: 6px;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-track {
+  background: rgba(55, 65, 81, 0.1);
+  border-radius: 3px;
+  cursor: default;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ef4444;
+  cursor: default; /*estaba en pointer*/
+} 
